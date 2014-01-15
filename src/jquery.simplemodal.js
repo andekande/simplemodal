@@ -515,12 +515,13 @@
 			}, 10);
 		},
 		getDimensions: function () {
-			// fix a jQuery bug with determining the window height - use innerHeight if available
+			// fix a jQuery bug with determining the window sizes on mobile
 			var s = this,
-				h = typeof window.innerHeight === 'undefined' ? wndw.height() : window.innerHeight;
+				wh = typeof window.innerHeight === 'undefined' ? wndw.height() : window.innerHeight,
+				ww = typeof window.innerWidth === 'undefined' ? wndw.width() : window.innerWidth;
 
 			d = [doc.height(), doc.width()];
-			w = [h, wndw.width()];
+			w = [wh, ww];
 		},
 		getVal: function (v, d) {
 			return v ? (typeof v === 'number' ? v
@@ -609,7 +610,7 @@
 		},
 		setPosition: function () {
 			var s = this, top, left,
-				hc = (w[0]/2) - (s.d.container.outerHeight(true)/2),
+				hc = (Math.min(w[0],d[0])/2) - (s.d.container.outerHeight(true)/2),
 				vc = (w[1]/2) - (s.d.container.outerWidth(true)/2),
 				st = s.d.container.css('position') !== 'fixed' ? wndw.scrollTop() : 0;
 
